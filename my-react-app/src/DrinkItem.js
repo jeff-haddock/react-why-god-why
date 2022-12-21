@@ -1,30 +1,32 @@
 import React from "react"
 
 export default class DrinkItem extends React.Component{
-    constructor(props) {
-        super(props);
+    constructor( props ) {
+        super();
+        
         this.state = {
-            key: props.iddrink,
-            iddrink: props.iddrink,
-            strDrink: props.strDrink,
-            strDrinkthumb: props.strDrinkThumb,
-            isFavorite: props.isFavorite,
-            favoriteDrinksHandler: props.favoriteDrinksHandler
+            id: props.drink.iddrink,
+            strDrink: props.drink.strDrink,
+            strDrinkthumb: props.drink.strDrinkThumb,
+            isFavorite: props.drink.isFavorite,
         }
-        this.toggleFavoriteBool = this.toggleFavoriteBool.bind(this)
+        this.favoritesHandler = props.favoritesHandler;
+
+        this.handleClick = this.handleClick.bind(this)
     }
-    toggleFavoriteBool(){
-        let favePlaceholder = this.state.isFavorite
-        this.setState({isFavorite: !this.state.isFavorite})
-        this.state.favoriteDrinksHandler(this.state.iddrink, favePlaceholder)
+
+    handleClick(drink){
+        this.favoritesHandler(drink.id, drink.isFavorite)
     }
+
     render(){
         return (
-            <li key={this.state.key}>
-                <img src={this.state.strDrinkthumb} alt={this.state.strDrink} height='50' width='50' />
-                <span iddrink={this.state.iddrink} strDrink={this.state.strDrink}>{this.state.strDrink}</span>
-                <button iddrink={this.state.iddrink} onClick={this.toggleFavoriteBool}>fav</button>
-            </li>
+            <div>
+                <img src={this.state.strDrinkthumb} alt={this.state.strDrink} height='100' width='100' />
+                <br/>
+                <span >{this.state.strDrink}</span>
+                <button onClick={() => { this.handleClick(this.state) }}>fav</button>
+            </div>
         )
     }
 }
